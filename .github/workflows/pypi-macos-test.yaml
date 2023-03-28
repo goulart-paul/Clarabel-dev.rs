@@ -28,10 +28,11 @@ jobs:
           profile: minimal
           default: true
       - name: Build wheels - x86_64
-        uses: messense/maturin-action@v1
+        uses: PyO3/maturin-action@v1
         with:
           target: x86_64
-          args: --release --out dist --features sdp-accelerate python -i python${{ env.PYTHON_VERSION }}
+          command: build
+          args: --release -i python${{ env.PYTHON_VERSION }} --out dist --features sdp-accelerate python 
       - name: Install built wheel - x86_64
         run: |
           pip install --upgrade pip
@@ -39,9 +40,10 @@ jobs:
           python -c "import clarabel"
           python examples/python/example_qp.py 
       - name: Build wheels - universal2
-        uses: messense/maturin-action@v1
+        uses: PyO3/maturin-action@v1
         with:
-          args: --release --universal2 --out dist --features sdp-accelerate python -i python${{ env.PYTHON_VERSION }}
+          command: build
+          args: --release -i python${{ env.PYTHON_VERSION }} --universal2 --out dist --features sdp-accelerate python 
       - name: Install built wheel - universal2
         run: |
           pip install --upgrade pip
