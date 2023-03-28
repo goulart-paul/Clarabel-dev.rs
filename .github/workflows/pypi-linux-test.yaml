@@ -27,13 +27,14 @@ jobs:
       - name: Install required system libraries
         run: sudo apt-get install pkg-config libssl-dev
         run: sudo apt-get install pkg-config libssl
+        run: sudo apt-get install openblas-dev
 
       - name: Build wheels
         uses: messense/maturin-action@v1
         with:
           target: ${{ matrix.target }}
           manylinux: auto
-          args: --release --out dist --features "sdp-openblas,python" -i python${{ env.PYTHON_VERSION }}
+          args: --release --out dist --features "sdp-openblas,openblas-src/system,python" -i python${{ env.PYTHON_VERSION }}
 
       - name: Install built wheel
         if: matrix.target == 'x86_64'
