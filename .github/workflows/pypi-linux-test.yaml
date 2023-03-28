@@ -28,7 +28,7 @@ jobs:
         with:
           target: ${{ matrix.target }}
           manylinux: auto
-          args: --release --out dist --features python -i python${{ env.PYTHON_VERSION }}
+          args: --release --out dist --features sdp-openblas python -i python${{ env.PYTHON_VERSION }}
       - name: Install built wheel
         if: matrix.target == 'x86_64'
         run: |
