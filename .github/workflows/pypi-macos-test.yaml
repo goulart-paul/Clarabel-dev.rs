@@ -32,7 +32,7 @@ jobs:
         with:
           target: x86_64
           command: build
-          args: --release -i python${{ env.PYTHON_VERSION }} --out dist --features sdp-accelerate python 
+          args: --release -i python${{ env.PYTHON_VERSION }} --out dist --features "sdp-accelerate,python" 
       - name: Install built wheel - x86_64
         run: |
           pip install --upgrade pip
@@ -43,7 +43,7 @@ jobs:
         uses: PyO3/maturin-action@v1
         with:
           command: build
-          args: --release -i python${{ env.PYTHON_VERSION }} --universal2 --out dist --features sdp-accelerate python 
+          args: --release -i python${{ env.PYTHON_VERSION }} --universal2 --out dist --features "sdp-accelerate,python" 
       - name: Install built wheel - universal2
         run: |
           pip install --upgrade pip
