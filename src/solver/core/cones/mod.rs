@@ -26,9 +26,9 @@ pub use {
 };
 
 // only use PSD cones with SDP/Blas enabled
-#[cfg(feature = "sdp")]
+#[cfg(feature = "_sdp")]
 mod psdtrianglecone;
-#[cfg(feature = "sdp")]
+#[cfg(feature = "_sdp")]
 pub use psdtrianglecone::*;
 
 // marker for primal / dual distinctions

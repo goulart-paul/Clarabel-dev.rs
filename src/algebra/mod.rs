@@ -39,9 +39,9 @@ pub use csc::*;
 mod densesym3x3;
 pub(crate) use densesym3x3::*;
 
-#[cfg(feature = "sdp")]
+#[cfg(feature = "_sdp")]
 mod dense;
-#[cfg(feature = "sdp")]
+#[cfg(feature = "_sdp")]
 pub use dense::*;
 
 //configure tests of internals

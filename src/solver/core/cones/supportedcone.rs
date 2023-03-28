@@ -1,7 +1,7 @@
 use super::*;
 use crate::algebra::FloatT;
 
-#[cfg(feature = "sdp")]
+#[cfg(feature = "_sdp")]
 use crate::algebra::triangular_number;
 
 // ---------------------------------------------------
@@ -37,7 +37,7 @@ pub enum SupportedConeT<T> {
     ///
     /// The parameter indicates the matrix dimension, i.e. size = n
     /// means that the variable is the upper triangle of an nxn matrix.
-    #[cfg(feature = "sdp")]
+    #[cfg(feature = "_sdp")]
     PSDTriangleConeT(usize),
 }
 
@@ -53,7 +53,7 @@ impl<T> SupportedConeT<T> {
             SupportedConeT::SecondOrderConeT(dim) => *dim,
             SupportedConeT::ExponentialConeT() => 3,
             SupportedConeT::PowerConeT(_) => 3,
-            #[cfg(feature = "sdp")]
+            #[cfg(feature = "_sdp")]
             SupportedConeT::PSDTriangleConeT(dim) => triangular_number(*dim),
         }
     }
@@ -79,7 +79,7 @@ pub fn make_cone<T: FloatT>(cone: SupportedConeT<T>) -> SupportedCone<T> {
         SupportedConeT::SecondOrderConeT(dim) => SecondOrderCone::<T>::new(dim).into(),
         SupportedConeT::ExponentialConeT() => ExponentialCone::<T>::new().into(),
         SupportedConeT::PowerConeT(α) => PowerCone::<T>::new(α).into(),
-        #[cfg(feature = "sdp")]
+        #[cfg(feature = "_sdp")]
         SupportedConeT::PSDTriangleConeT(dim) => PSDTriangleCone::<T>::new(dim).into(),
     }
 }
@@ -101,7 +101,7 @@ where
     SecondOrderCone(SecondOrderCone<T>),
     ExponentialCone(ExponentialCone<T>),
     PowerCone(PowerCone<T>),
-    #[cfg(feature = "sdp")]
+    #[cfg(feature = "_sdp")]
     PSDTriangleCone(PSDTriangleCone<T>),
 }
 
@@ -129,7 +129,7 @@ pub(crate) enum SupportedConeTag {
     SecondOrderCone,
     ExponentialCone,
     PowerCone,
-    #[cfg(feature = "sdp")]
+    #[cfg(feature = "_sdp")]
     PSDTriangleCone,
 }
 
@@ -146,7 +146,7 @@ impl<T> SupportedConeAsTag for SupportedConeT<T> {
             SupportedConeT::SecondOrderConeT(_) => SupportedConeTag::SecondOrderCone,
             SupportedConeT::ExponentialConeT() => SupportedConeTag::ExponentialCone,
             SupportedConeT::PowerConeT(_) => SupportedConeTag::PowerCone,
-            #[cfg(feature = "sdp")]
+            #[cfg(feature = "_sdp")]
             SupportedConeT::PSDTriangleConeT(_) => SupportedConeTag::PSDTriangleCone,
         }
     }
@@ -161,7 +161,7 @@ impl<T: FloatT> SupportedConeAsTag for SupportedCone<T> {
             SupportedCone::SecondOrderCone(_) => SupportedConeTag::SecondOrderCone,
             SupportedCone::ExponentialCone(_) => SupportedConeTag::ExponentialCone,
             SupportedCone::PowerCone(_) => SupportedConeTag::PowerCone,
-            #[cfg(feature = "sdp")]
+            #[cfg(feature = "_sdp")]
             SupportedCone::PSDTriangleCone(_) => SupportedConeTag::PSDTriangleCone,
         }
     }
@@ -176,7 +176,7 @@ impl SupportedConeTag {
             SupportedConeTag::SecondOrderCone => "SecondOrderCone",
             SupportedConeTag::ExponentialCone => "ExponentialCone",
             SupportedConeTag::PowerCone => "PowerCone",
-            #[cfg(feature = "sdp")]
+            #[cfg(feature = "_sdp")]
             SupportedConeTag::PSDTriangleCone => "PSDTriangleCone",
         }
     }

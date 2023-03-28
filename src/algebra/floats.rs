@@ -1,7 +1,7 @@
 use num_traits::{Float, FloatConst, FromPrimitive, NumAssign};
 use std::fmt::{Debug, Display, LowerExp};
 
-#[cfg(feature = "sdp")]
+#[cfg(feature = "_sdp")]
 use crate::algebra::dense::BlasFloatT;
 
 /// Trait for floating point types used in the Clarabel solver.
@@ -44,17 +44,17 @@ impl<T> CoreFloatT for T where
 {
 }
 
-// if "sdp" is enabled, we must add an additional trait
+// if "_sdp" is enabled, we must add an additional trait
 // trait bound to restrict compilation for f32/f64 types
 // since there is no BLAS support otherwise
-#[cfg(feature = "sdp")]
+#[cfg(feature = "_sdp")]
 pub trait FloatT: CoreFloatT + BlasFloatT {}
-#[cfg(feature = "sdp")]
+#[cfg(feature = "_sdp")]
 impl<T> FloatT for T where T: CoreFloatT + BlasFloatT {}
 
-#[cfg(not(feature = "sdp"))]
+#[cfg(not(feature = "_sdp"))]
 pub trait FloatT: CoreFloatT {}
-#[cfg(not(feature = "sdp"))]
+#[cfg(not(feature = "_sdp"))]
 impl<T> FloatT for T where T: CoreFloatT {}
 
 /// Trait for convering Rust primitives to [`FloatT`](crate::algebra::FloatT)
