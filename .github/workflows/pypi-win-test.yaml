@@ -32,8 +32,9 @@ jobs:
           default: true
       - name: Install cargo-vcpkg
         run: |
-          cargo install cargo-vcpkg && vcpkg install
-          openblas:x64-windows-static-md
+          cargo install cargo-vcpkg && 
+          vcpkg install openblas:x64-windows-static-md && 
+          vcpkg integrate install
       - name: Build wheels
         uses: messense/maturin-action@v1
         with:
