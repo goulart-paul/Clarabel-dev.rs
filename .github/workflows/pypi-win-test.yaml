@@ -30,6 +30,9 @@ jobs:
           toolchain: stable
           profile: minimal
           default: true
+      - name: Install cargo-vcpkg
+        run: |
+          cargo install cargo-vcpkg
       - name: Build wheels
         uses: messense/maturin-action@v1
         with:
@@ -46,27 +49,3 @@ jobs:
         with:
           name: wheels
           path: dist
-
-
-  release:
-    name: Release
-    runs-on: ubuntu-latest
-    # if: "startsWith(github.ref, 'refs/tags/v')"
-    needs: 
-      - macos
-      - windows
-      - linux
-    steps:
-      - uses: actions/download-artifact@v2
-        with:
-          name: wheels
-      - uses: actions/setup-python@v2
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-      - name: Publish to PyPi
-        env:
-          TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
-          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-        run: |
-          pip install --upgrade twine
-          twine upload --skip-existing --repository ${{ env.PYPI_TARGET  }} *
