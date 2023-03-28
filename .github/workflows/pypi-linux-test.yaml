@@ -26,6 +26,7 @@ jobs:
 
       - name: Install required system libraries
         run: sudo apt-get install pkg-config libssl-dev
+        run: sudo apt-get install pkg-config libssl
 
       - name: Build wheels
         uses: messense/maturin-action@v1
