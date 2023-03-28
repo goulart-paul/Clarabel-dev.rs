@@ -24,8 +24,11 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
           architecture: x64
 
-      - name: Install system openblas
-        run: sudo apt-get install libopenblas-dev
+      - name: Install required system libraries
+        run: sudo apt-get install pkg-config libssl
+
+      - name: Install system openblas (avoids build?)
+        run: sudo apt-get install openblas-dev
 
       - name: Build wheels
         uses: messense/maturin-action@v1
