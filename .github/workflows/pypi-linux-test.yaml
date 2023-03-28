@@ -28,7 +28,7 @@ jobs:
         run: sudo apt-get install pkg-config libssl-dev
              
       - name: Install system openblas (avoids build?)
-        run: sudo apt-get install openblas-dev
+        run: sudo apt-get install libopenblas-dev
 
       - name: Build wheels
         uses: messense/maturin-action@v1
