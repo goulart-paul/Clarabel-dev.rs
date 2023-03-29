@@ -46,7 +46,8 @@ python = ["_sdp", "dep:pyo3", "dep:num-derive"]
 _sdp = ["dep:blas", "dep:lapack", "dep:blas-src","dep:lapack-src"]
 
 # special configuration for openblas to avoid build failures in git actions 
-_openblas_config = ["openssl","openssl/vendored"]
+# openssl is specified with "vendored" optiion in the deps below
+_openblas_config = ["openssl"]
 
 
 # -------------------------------
@@ -80,6 +81,7 @@ optional = true
 [dependencies.openssl]
 optional = true 
 version = "0.10"
+features = ["vendored"]
 
 
 

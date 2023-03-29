@@ -24,7 +24,7 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Install required system libraries
-        run: sudo apt-get install pkg-config openssl
+        run: sudo apt-get install pkg-config libssl-devel
              
       - name: Install system openblas (avoids build?)
         run: sudo apt-get install libopenblas-dev
