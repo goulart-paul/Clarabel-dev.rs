@@ -48,7 +48,7 @@ jobs:
         uses: PyO3/maturin-action@v1
         with:
           command: build
-          args: --release -i python${{ env.PYTHON_VERSION }} --universal2 --out dist --features "sdp-accelerate,python" 
+          args: --release -i python${{ env.PYTHON_VERSION }} --universal2 --out dist --features "python,sdp-accelerate" 
 
       - name: Install and test built wheel - universal2
         run: |
