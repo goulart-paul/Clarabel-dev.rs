@@ -50,6 +50,7 @@ jobs:
           python -m pip install dist/${{ env.PACKAGE_NAME }}-*.whl --force-reinstall
           python -c "import clarabel"
           python examples/python/example_qp.py 
+          python examples/python/example_sdp.py 
       - name: Upload wheels
         uses: actions/upload-artifact@v2
         with:
