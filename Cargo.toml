@@ -29,10 +29,13 @@ thiserror      = "1"
 
 [features]
 
+# enables blas/lapack for SDP support (do not enable directly)
+_sdp = ["dep:blas", "dep:lapack", "dep:blas-src","dep:lapack-src"]
+
 # configure options for different blas flavours
 sdp-accelerate = ["_sdp", "blas-src?/accelerate", "lapack-src?/accelerate"]
 sdp-netlib     = ["_sdp", "blas-src?/netlib",     "lapack-src?/netlib"]
-sdp-openblas   = ["_sdp", "blas-src?/openblas",   "lapack-src?/openblas", "openblas-src?/static", "_openblas_config"]
+sdp-openblas   = ["_sdp", "blas-src?/openblas",   "lapack-src?/openblas"]
 sdp-mkl        = ["_sdp", "blas-src?/intel-mkl",  "lapack-src?/intel-mkl"]
 
 # build as the julia interface 
@@ -42,15 +45,13 @@ julia = ["_sdp", "dep:libc","dep:num-derive","dep:serde", "dep:serde_json"]
 # should only be used with maturin builds.
 python = ["_sdp", "dep:pyo3", "dep:num-derive"]
 
-# remaining features are for internal config and should 
-# not be set directly by other users of this crate 
+# NB: features with leading underscore for internal use only.
+# These options may change or disappear without warning
 
-# enables blas/lapack for SDP support (do not enable directly)
-_sdp = ["dep:blas", "dep:lapack", "dep:blas-src","dep:lapack-src"]
-
-# special configuration for openblas to avoid build failures in git actions 
-# openssl is specified with "vendored" optiion in the deps below
-_openblas_config = ["openssl"]
+# special configuration for openblas to avoid build failures in 
+# git actions. openssl is specified with "vendored" feature in 
+# the deps below, and openblas-src with "system,static"
+_openblas_git_config = ["openssl","openblas-src"]
 
 
 # -------------------------------
@@ -73,19 +74,19 @@ optional = true
 version = "0.8"
 optional = true 
 
-# required so we can set optional features for it 
-# when feature "openblas" is selected
+# required so we can set optional features 
+# when feature "_openblas_git_config" is selected
 [dependencies.openblas-src]
 version = "0.10.8"
 optional = true 
+features = ["static","system"]
 
-# openblas-based builds can fail in git actions 
+# openblas based builds can fail in git actions 
 # unless we force ssl to used the vendored feature
 [dependencies.openssl]
 optional = true 
 version = "0.10"
 features = ["vendored"]
-
 
 
 # -------------------------------
