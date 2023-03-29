@@ -36,7 +36,7 @@ jobs:
           command: build
           args: --release -i python${{ env.PYTHON_VERSION }} --out dist --features "sdp-accelerate,python" 
 
-      - name: Install built wheel - x86_64
+      - name: Install and test built wheel - x86_64
         run: |
           pip install --upgrade pip
           pip install dist/${{ env.PACKAGE_NAME }}-*.whl --force-reinstall
@@ -50,7 +50,7 @@ jobs:
           command: build
           args: --release -i python${{ env.PYTHON_VERSION }} --universal2 --out dist --features "sdp-accelerate,python" 
 
-      - name: Install built wheel - universal2
+      - name: Install and test built wheel - universal2
         run: |
           pip install --upgrade pip
           pip install dist/${{ env.PACKAGE_NAME }}-*universal2.whl --force-reinstall

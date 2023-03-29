@@ -35,10 +35,9 @@ jobs:
         with:
           target: ${{ matrix.target }}
           manylinux: auto
-          args: --release --out dist --features "sdp-openblas,openblas-src/system,python" -i python${{ env.PYTHON_VERSION }}
+          args: --release --out dist -i python${{ env.PYTHON_VERSION }} --features "python,sdp-openblas,openblas-src/system"
 
-      - name: Install built wheel
-        if: matrix.target == 'x86_64'
+      - name: Install and test built wheel
         run: |
           python -m pip install dist/${{ env.PACKAGE_NAME }}-*.whl --force-reinstall
           python -c "import clarabel"
