@@ -10,6 +10,7 @@ readme = "README.md"
 repository = "https://github.com/oxfordcontrol/Clarabel.rs"
 keywords = ["convex", "optimization", "QP", "LP", "SOCP", "SDP", "conic"]
 categories = ["mathematics"]
+resolver = "1"
 
 [dependencies]
 lazy_static    = "1.4"
