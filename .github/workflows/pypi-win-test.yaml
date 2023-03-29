@@ -39,7 +39,7 @@ jobs:
           && vcpkg integrate install
 
       - name: Build wheels
-        uses: messense/maturin-action@v1
+        uses: PyO3/maturin-action@v1
         with:
           target: ${{ matrix.target }}
           args: --release --out dist -i python${{ env.PYTHON_VERSION }} --features "python,sdp-openblas,openblas-src/system"

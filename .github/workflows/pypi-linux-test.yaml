@@ -36,7 +36,7 @@ jobs:
         run: cargo tree --features "python,sdp-openblas,openblas-src/system" -e features
 
       - name: Build wheels
-        uses: messense/maturin-action@v1
+        uses: PyO3/maturin-action@v1
         with:
           target: ${{ matrix.target }}
           manylinux: auto
