@@ -29,11 +29,8 @@ thiserror      = "1"
 # configure options for different blas flavours
 sdp-accelerate = ["_sdp", "blas-src?/accelerate", "lapack-src?/accelerate"]
 sdp-netlib     = ["_sdp", "blas-src?/netlib",     "lapack-src?/netlib"]
-sdp-openblas   = ["_sdp", "blas-src?/openblas",   "lapack-src?/openblas", "openblas-src?/static"]
+sdp-openblas   = ["_sdp", "blas-src?/openblas",   "lapack-src?/openblas", "openblas-src?/static", "_openblas_config"]
 sdp-mkl        = ["_sdp", "blas-src?/intel-mkl",  "lapack-src?/intel-mkl"]
-
-# enables blas/lapack for SDP support (do not enable directly)
-_sdp = ["dep:blas", "dep:lapack", "dep:blas-src","dep:lapack-src"]
 
 # build as the julia interface 
 julia = ["_sdp", "dep:libc","dep:num-derive","dep:serde", "dep:serde_json"] 
@@ -41,6 +38,15 @@ julia = ["_sdp", "dep:libc","dep:num-derive","dep:serde", "dep:serde_json"]
 # build as the python interface via pyo3.
 # should only be used with maturin builds.
 python = ["_sdp", "dep:pyo3", "dep:num-derive"]
+
+# remaining features are for internal config and should 
+# not be set directly by other users of this crate 
+
+# enables blas/lapack for SDP support (do not enable directly)
+_sdp = ["dep:blas", "dep:lapack", "dep:blas-src","dep:lapack-src"]
+
+# special configuration for openblas to avoid build failures in git actions 
+_openblas_config = ["openssl","openssl/vendored"]
 
 
 # -------------------------------
@@ -68,6 +74,14 @@ optional = true
 [dependencies.openblas-src]
 version = "0.10.5"
 optional = true 
+
+# openblas-based builds can fail in git actions 
+# unless we force ssl to used the vendored feature
+[dependencies.openssl]
+optional = true 
+version = "0.2"
+features = "vendored"
+
 
 
 
