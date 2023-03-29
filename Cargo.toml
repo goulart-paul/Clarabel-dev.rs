@@ -79,8 +79,8 @@ optional = true
 # unless we force ssl to used the vendored feature
 [dependencies.openssl]
 optional = true 
-version = "0.2"
-features = "vendored"
+version = "0.10"
+
 
 
 
