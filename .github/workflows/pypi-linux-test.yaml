@@ -33,14 +33,14 @@ jobs:
         run: echo "Current dir :" && pwd && echo "list = " && ls && echo "ls opt" && ls /opt
 
       - name: dump cargo build tree
-        run: cargo tree --features "python,sdp-openblas,openblas-src/system" -e features
+        run: cargo tree --features "python,sdp-openblas,_openblas_git_config" -e features
 
       - name: Build wheels
         uses: PyO3/maturin-action@v1
         with:
           target: ${{ matrix.target }}
           manylinux: auto
-          args: -vv --release --out dist -i python${{ env.PYTHON_VERSION }} --features "python,sdp-openblas,openblas-src/system"
+          args: -vv --release --out dist -i python${{ env.PYTHON_VERSION }} --features "python,sdp-openblas,_openblas_git_config"
       - name: Install and test built wheel
         run: |
           python -m pip install dist/${{ env.PACKAGE_NAME }}-*.whl --force-reinstall
