@@ -29,6 +29,9 @@ jobs:
       - name: Install system openblas (avoids build?)
         run: sudo apt-get install libopenblas-dev
 
+      - name: dump cargo build tree
+        run: cargo tree --features "python,sdp-openblas,openblas-src/system"
+
       - name: Build wheels
         uses: messense/maturin-action@v1
         with:
