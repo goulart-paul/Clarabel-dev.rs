@@ -10,7 +10,9 @@ readme = "README.md"
 repository = "https://github.com/oxfordcontrol/Clarabel.rs"
 keywords = ["convex", "optimization", "QP", "LP", "SOCP", "SDP", "conic"]
 categories = ["mathematics"]
-resolver = "1"
+
+#required for openssl to work on git actions
+resolver = "1"     
 
 [dependencies]
 lazy_static    = "1.4"
@@ -74,7 +76,7 @@ optional = true
 # required so we can set optional features for it 
 # when feature "openblas" is selected
 [dependencies.openblas-src]
-version = "0.10.5"
+version = "0.10.8"
 optional = true 
 
 # openblas-based builds can fail in git actions 
