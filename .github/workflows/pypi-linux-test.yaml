@@ -24,11 +24,11 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
-      - name: Install required system libraries
-        run: sudo apt-get install pkg-config libssl-dev
-             
-      - name: Install system openblas (avoids build?)
-        run: sudo apt-get install libopenblas-dev
+      - name: Install system libraries + openblas
+        run: |
+          apt update
+          apt install -y pkg-config libssl-dev 
+          apt install -y libopenblas-dev
 
       - name: Investigate file locations 
         run: echo "Current dir :" && pwd && echo "list = " && ls && echo "ls opt" && ls /opt
