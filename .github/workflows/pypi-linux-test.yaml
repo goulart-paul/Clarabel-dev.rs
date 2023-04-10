@@ -24,9 +24,13 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Install system libraries
-        run: sudo apt update
-        run: sudo apt install -y gfortran
-        run: sudo apt install -y pkg-config libssl-dev 
+        run: |
+          apt update
+          apt install -y pkg-config libssl-dev 
+
+      - name: Install gfortran
+        run: |
+          apt install -y gfortran
 
       - name: Build wheels
         uses: PyO3/maturin-action@v1
