@@ -16,26 +16,22 @@ jobs:
     runs-on: ubuntu-18.04
     strategy:
        matrix:
-         #target: [x86_64, i686, aarch64]
-         target: [x86_64]
+         target: [x86_64, i686, aarch64]
+         #target: [x86_64]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
           python-version: ${{ env.PYTHON_VERSION }}
-
       - name: Install system libraries + openblas
         run: |
           sudo apt update
           sudo apt install -y pkg-config libssl-dev 
           sudo apt install -y libopenblas-dev
-
       - name: Investigate file locations 
         run: echo "Current dir :" && pwd && echo "list = " && ls && echo "ls opt" && ls /opt
-
       - name: dump cargo build tree
         run: cargo tree --features "python,sdp-openblas,_openblas_git_config" -e features
-
       - name: Build wheels
         uses: PyO3/maturin-action@v1
         with:
@@ -47,10 +43,8 @@ jobs:
           python -c "import clarabel"
           python examples/python/example_qp.py 
           python examples/python/example_sdp.py 
-
       - name: Upload wheels
         uses: actions/upload-artifact@v2
         with:
           name: wheels
           path: dist
-
