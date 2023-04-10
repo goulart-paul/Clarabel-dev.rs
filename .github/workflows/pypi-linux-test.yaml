@@ -25,8 +25,8 @@ jobs:
 
       - name: Install system libraries
         run: |
-          apt update
-          apt install -y gfortran
+          sudo apt update
+          sudo apt install -y gfortran
           sudo apt install -y pkg-config libssl-dev 
 
       - name: Build wheels
