@@ -43,7 +43,7 @@ jobs:
         uses: PyO3/maturin-action@v1
         with:
           target: ${{ matrix.target }}
-          args: --release --out dist -i python${{ env.PYTHON_VERSION }} --features "python,sdp-openblas,_openblas_git_config"
+          args: --release --out dist -i python${{ env.PYTHON_VERSION }} --features "python,sdp-openblas,_openblas_git_config,openblas-src/system"
 
       - name: Install and test built wheel
         shell: bash
