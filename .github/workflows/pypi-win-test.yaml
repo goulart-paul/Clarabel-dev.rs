@@ -36,7 +36,7 @@ jobs:
       - name: Install cargo-vcpkg
         run: >
           cargo install cargo-vcpkg 
-          && vcpkg install openblas:x64-windows-static-md openblas:x86-windows-static-md  
+          && vcpkg install openblas:x64-windows-static-md
           && vcpkg integrate install
 
       - name: Build wheels
