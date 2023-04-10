@@ -52,6 +52,7 @@ _sdp = ["dep:blas", "dep:lapack", "dep:blas-src","dep:lapack-src"]
 # git actions. openssl is specified with "vendored" feature in 
 # the deps below, and openblas-src with "static"
 _openblas_git_config = ["openssl","openblas-src"]
+_openblas_git_config_system = ["openssl", "openblas-src", "openblas-src?/system"]
 
 
 # -------------------------------

@@ -34,7 +34,7 @@ jobs:
         with:
           target: ${{ matrix.target }}
           manylinux: auto
-          args: -v --release --out dist -i python${{ env.PYTHON_VERSION }} --features "python,sdp-openblas,_openblas_git_config"
+          args: -v --release --out dist -i python${{ env.PYTHON_VERSION }} --features "python,sdp-openblas,_openblas_git_config_system"
 
       - name: Install and test built wheel
         run: |
