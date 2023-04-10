@@ -27,7 +27,7 @@ jobs:
         run: |
           apt update
           apt install -y gfortran
-          apt install -y pkg-config libssl-dev 
+          sudo apt install -y pkg-config libssl-dev 
 
       - name: Build wheels
         uses: PyO3/maturin-action@v1
