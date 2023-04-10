@@ -24,11 +24,11 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
-      - name: Install system libraries + openblas
+      - name: Install system libraries
         run: |
           sudo apt update
           sudo apt install -y pkg-config libssl-dev 
-          sudo apt install -y libopenblas-dev
+          sudo apt install -y gfortran
 
       - name: Investigate file locations 
         run: echo "Current dir :" && pwd && echo "list = " && ls && echo "ls opt" && ls /opt
