@@ -33,6 +33,14 @@ jobs:
           sudo apt install -y gfortran
           sudo apt install -y gfortran-aarch64-linux-gnu
 
+      - name: Direct cargo build
+        env:
+          RUST_BACKTRACE: '1'
+        run: |
+          cargo build -vv --release --features "sdp-openblas,_openblas_git_config" --target ${{ matrix.target }}
+          cargo test
+
+
       - name: Build wheels
         uses: PyO3/maturin-action@v1
         env:
