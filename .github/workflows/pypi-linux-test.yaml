@@ -16,7 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
        matrix:
-        target: [x86_64, aarch64]
+        #target: [x86_64, aarch64]
+        target: [aarch64]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
@@ -37,7 +38,7 @@ jobs:
         env:
           RUST_BACKTRACE: '1'
         run: |
-          cargo build -vv --release --features "sdp-openblas,_openblas_git_config" 
+          cargo build -vv --release --features "sdp-openblas,_openblas_git_config" --target aarch64-unknown-linux-gnu
           cargo test
 
 
