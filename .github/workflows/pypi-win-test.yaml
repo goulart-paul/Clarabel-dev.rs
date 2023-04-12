@@ -42,8 +42,7 @@ jobs:
       - name: Build wheels
         uses: PyO3/maturin-action@v1
         with:
-          target: ${{ matrix.target }}
-          args: --release --out dist -i python${{ env.PYTHON_VERSION }} --features "python,sdp-openblas,_openblas_git_config,openblas-src/system"
+          args: --target x86_64-pc-windows-msvc --release --out dist -i python${{ env.PYTHON_VERSION }} --features "python,sdp-openblas,_openblas_git_config"
 
       - name: Install and test built wheel
         shell: bash
