@@ -37,12 +37,13 @@ jobs:
         run: >
           cargo install cargo-vcpkg 
           && vcpkg install openblas:x64-windows-static-md
+          && vcpkg install clapack:x64-windows-static-md
           && vcpkg integrate install
 
       - name: Build wheels
         uses: PyO3/maturin-action@v1
         with:
-          args: --target x86_64-pc-windows-msvc --release --out dist -i python${{ env.PYTHON_VERSION }} --features "python,sdp-openblas,_openblas_git_config"
+          args: --target x86_64-pc-windows-msvc --release --out dist -i python${{ env.PYTHON_VERSION }} --features "python,sdp-openblas,_openblas_git_config,openblas-src/system"
 
       - name: Install and test built wheel
         shell: bash
