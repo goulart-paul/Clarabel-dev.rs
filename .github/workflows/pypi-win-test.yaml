@@ -37,7 +37,7 @@ jobs:
         run: >
           cargo install cargo-vcpkg 
           && vcpkg install openblas:x64-windows-static-md
-          && vcpkg install clapack:x64-windows-static-md
+          && vcpkg install lapack:x64-windows-static-md
           && vcpkg integrate install
 
       - name: Build wheels
