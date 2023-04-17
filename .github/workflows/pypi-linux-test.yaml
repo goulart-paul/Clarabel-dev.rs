@@ -47,7 +47,7 @@ jobs:
           RUST_BACKTRACE: '1'
         run: |
           cargo build -v --release --features "sdp-openblas,openblas-src/system,openssl/vendored"
-          cargo test
+          cargo test --features "sdp-openblas,openblas-src/system,openssl/vendored"
 
       - name: Build wheels
         uses: PyO3/maturin-action@v1
