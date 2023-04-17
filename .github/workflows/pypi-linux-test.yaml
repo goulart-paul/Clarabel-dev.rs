@@ -42,6 +42,13 @@ jobs:
         run: |
           env
 
+      - name: Direct cargo build
+        env:
+          RUST_BACKTRACE: '1'
+        run: |
+          cargo build -v --release --features "sdp-openblas,openblas-src/system,openssl/vendored"
+          cargo test
+
       - name: Build wheels
         uses: PyO3/maturin-action@v1
         env:
@@ -49,7 +56,7 @@ jobs:
         with:
           target: ${{ matrix.target }}
           manylinux: auto
-          args: -vv --release --out dist -i python${{ env.PYTHON_VERSION }} --features "_pypi_config_linux"
+          args: -v --release --out dist -i python${{ env.PYTHON_VERSION }} --features "_pypi_config_linux"
 
       - name: Install and test built wheel
         run: |
