@@ -29,30 +29,30 @@ thiserror      = "1"
 
 [features]
 
-# configure options for different blas flavours
-sdp-accelerate = ["_sdp", "blas-src?/accelerate", "lapack-src?/accelerate"]
-sdp-netlib     = ["_sdp", "blas-src?/netlib",     "lapack-src?/netlib"]
-sdp-openblas   = ["_sdp", "blas-src?/openblas",   "lapack-src?/openblas"]
-sdp-mkl        = ["_sdp", "blas-src?/intel-mkl",  "lapack-src?/intel-mkl"]
+# enables blas/lapack for SDP support, with blas/lapack src unspecified
+sdp = ["dep:blas", "dep:lapack", "dep:blas-src","dep:lapack-src"]
+
+# explicit configuration options for different blas flavours
+sdp-accelerate = ["sdp", "blas-src/accelerate", "lapack-src/accelerate", "accelerate-src"]
+sdp-netlib     = ["sdp", "blas-src/netlib",     "lapack-src/netlib",     "netlib-src"]
+sdp-openblas   = ["sdp", "blas-src/openblas",   "lapack-src/openblas",   "openblas-src"]
+sdp-mkl        = ["sdp", "blas-src/intel-mkl",  "lapack-src/intel-mkl",  "intel-mkl-src"]
 
 # build as the julia interface 
-julia = ["_sdp", "dep:libc","dep:num-derive","dep:serde", "dep:serde_json"] 
+julia = ["sdp", "dep:libc","dep:num-derive","dep:serde", "dep:serde_json"] 
  
 # build as the python interface via pyo3.
 # should only be used with maturin builds.
-python = ["_sdp", "dep:pyo3", "dep:num-derive"]
+python = ["sdp", "dep:pyo3", "dep:num-derive"]
 
 # NB: features with leading underscore for internal use only.
 # These options may change or disappear without warning
 
-# enables blas/lapack for SDP support (do not enable directly)
-_sdp = ["dep:blas", "dep:lapack", "dep:blas-src","dep:lapack-src"]
-
-# special configuration for openblas to avoid build failures in 
-# git actions. openssl is specified with "vendored" feature in 
-# the deps below, and openblas-src with "static"
-_openblas_git_config = ["openssl","openblas-src"]
-_openblas_git_config_system = ["openssl", "openblas-src", "openblas-src?/system"]
+# special configuration for distribution of python binaries, where 
+# we need to be explicit about the blas configuration 
+_pypi_config_linux = ["python", "sdp-openblas", "openssl/vendored", "openblas-src/static"]
+_pypi_config_win   = ["python", "sdp-openblas", "openblas-src/system"]
+_pypi_config_osx   = ["python", "sdp-accelerate"]
 
 
 # -------------------------------
@@ -76,18 +76,16 @@ version = "0.8"
 optional = true 
 
 # required so we can set optional features 
-# when feature "_openblas_git_config" is selected
+# when building for pypi distributions 
 [dependencies.openblas-src]
 version = "0.10.8"
 optional = true 
-features = ["static"]
 
 # openblas based builds can fail in git actions 
 # unless we force ssl to used the vendored feature
 [dependencies.openssl]
 optional = true 
 version = "0.10"
-features = ["vendored"]
 
 
 # -------------------------------
@@ -175,3 +173,22 @@ crate-type = ["lib","cdylib"]
 
 [package.metadata.docs.rs]
 rustdoc-args = [ "--html-in-header", "./html/rustdocs-header.html" ]
+
+
+# ------------------------------
+# windows vcpkg config
+# credit: https://github.com/BQSKit/bqskitrs/blob/main/Cargo.toml
+# ------------------------------
+
+[target.'cfg(target_os = "windows")'.build-dependencies]
+vcpkg = "0.2.15"
+
+[package.metadata.vcpkg]
+git = "https://github.com/microsoft/vcpkg"
+rev = "2022.09.27"
+
+[package.metadata.vcpkg.target]
+x86_64-pc-windows-msvc = { triplet="x64-windows-static-md", install=[
+    "openblas",
+    "clapack",
+] }
