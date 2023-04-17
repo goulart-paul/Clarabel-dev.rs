@@ -44,7 +44,7 @@ impl<T> CoreFloatT for T where
 {
 }
 
-// if "_sdp" is enabled, we must add an additional trait
+// if "sdp" is enabled, we must add an additional trait
 // trait bound to restrict compilation for f32/f64 types
 // since there is no BLAS support otherwise
 #[cfg(feature = "sdp")]
