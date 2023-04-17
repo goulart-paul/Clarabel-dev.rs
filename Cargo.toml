@@ -50,7 +50,7 @@ python = ["sdp", "dep:pyo3", "dep:num-derive"]
 
 # special configuration for distribution of python binaries, where 
 # we need to be explicit about the blas configuration 
-_pypi_config_linux = ["python", "sdp-openblas", "openblas-src/system"]
+_pypi_config_linux = ["python", "sdp-openblas", "openblas-src/system", "openssl/vendored"]
 _pypi_config_win   = ["python", "sdp-openblas", "openblas-src/system"]
 _pypi_config_osx   = ["python", "sdp-accelerate"]
 
