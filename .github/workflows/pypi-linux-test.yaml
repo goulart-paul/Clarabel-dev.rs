@@ -34,7 +34,7 @@ jobs:
           sudo apt install -y gfortran
           sudo apt install -y gfortran-aarch64-linux-gnu
 
-       - name: Dump env
+      - name: Dump env
         run: |
           env
 
