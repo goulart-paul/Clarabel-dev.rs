@@ -29,6 +29,10 @@ jobs:
           sudo apt update
           sudo apt install -y pkg-config libssl-dev 
 
+      - name: Install openblas 
+        run: |
+          sudo apt install -y libopenblas-dev
+
       - name: Install gfortran
         run: |
           sudo apt install -y gfortran
