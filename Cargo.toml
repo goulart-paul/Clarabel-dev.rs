@@ -30,7 +30,7 @@ thiserror      = "1"
 [features]
 
 # enables blas/lapack for SDP support, with blas/lapack src unspecified
-sdp = ["dep:blas", "dep:lapack", "dep:blas-src","dep:lapack-src"]
+sdp = ["blas", "lapack", "blas-src","lapack-src"]
 
 # explicit configuration options for different blas flavours
 sdp-accelerate = ["sdp", "blas-src/accelerate", "lapack-src/accelerate"]
@@ -119,7 +119,7 @@ path = "examples/rust/example_box.rs"
 [[example]]
 name = "sdp"
 path = "examples/rust/example_sdp.rs"
-required-features = ["_sdp"]
+required-features = ["sdp"]
 
 
 

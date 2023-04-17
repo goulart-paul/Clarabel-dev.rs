@@ -1,6 +1,6 @@
 #![allow(non_snake_case)]
 #![allow(clippy::type_complexity)]
-#![cfg(feature = "_sdp")]
+#![cfg(feature = "sdp")]
 use clarabel::{algebra::*, solver::*};
 
 fn basic_sdp_data() -> (
