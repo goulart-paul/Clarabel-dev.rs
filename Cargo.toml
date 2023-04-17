@@ -33,10 +33,10 @@ thiserror      = "1"
 sdp = ["dep:blas", "dep:lapack", "dep:blas-src","dep:lapack-src"]
 
 # explicit configuration options for different blas flavours
-sdp-accelerate = ["sdp", "blas-src/accelerate", "lapack-src/accelerate", "accelerate-src"]
-sdp-netlib     = ["sdp", "blas-src/netlib",     "lapack-src/netlib",     "netlib-src"]
-sdp-openblas   = ["sdp", "blas-src/openblas",   "lapack-src/openblas",   "openblas-src"]
-sdp-mkl        = ["sdp", "blas-src/intel-mkl",  "lapack-src/intel-mkl",  "intel-mkl-src"]
+sdp-accelerate = ["sdp", "blas-src/accelerate", "lapack-src/accelerate"]
+sdp-netlib     = ["sdp", "blas-src/netlib",     "lapack-src/netlib"]
+sdp-openblas   = ["sdp", "blas-src/openblas",   "lapack-src/openblas"]
+sdp-mkl        = ["sdp", "blas-src/intel-mkl",  "lapack-src/intel-mkl"]
 
 # build as the julia interface 
 julia = ["sdp", "dep:libc","dep:num-derive","dep:serde", "dep:serde_json"] 
