@@ -25,12 +25,11 @@ thiserror      = "1"
 # -------------------------------
 # default feature set
 # -------------------------------
-# sdp support by default 
 
 [features]
 
 # enables blas/lapack for SDP support, with blas/lapack src unspecified
-sdp = ["blas", "lapack", "blas-src","lapack-src"]
+sdp = []
 
 # explicit configuration options for different blas flavours
 sdp-accelerate = ["sdp", "blas-src/accelerate", "lapack-src/accelerate"]
@@ -41,18 +40,11 @@ sdp-mkl        = ["sdp", "blas-src/intel-mkl",  "lapack-src/intel-mkl"]
 # build as the julia interface 
 julia = ["sdp", "dep:libc","dep:num-derive","dep:serde", "dep:serde_json"] 
  
-# build as the python interface via pyo3.
-# should only be used with maturin builds.
-python = ["sdp", "dep:pyo3", "dep:num-derive"]
-
-# NB: features with leading underscore for internal use only.
-# These options may change or disappear without warning
-
-# special configuration for distribution of python binaries, where 
-# we need to be explicit about the blas configuration 
-_pypi_config_linux = ["python", "sdp-openblas", "openblas-src/system", "openssl/vendored"]
-_pypi_config_win   = ["python", "sdp-openblas", "openblas-src/system"]
-_pypi_config_osx   = ["python", "sdp-accelerate"]
+# build as the python interface via maturin.
+# NB: python builds use scipy shared libraries
+# for blas/lapack, and should *not* explicitly 
+# enable a blas/lapack source package 
+python = ["sdp", "dep:libc", "dep:pyo3", "dep:num-derive"]
 
 
 # -------------------------------
@@ -74,18 +66,6 @@ optional = true
 [dependencies.lapack-src]
 version = "0.8"
 optional = true 
-
-# required so we can set optional features 
-# when building for pypi distributions 
-[dependencies.openblas-src]
-version = "0.10.8"
-optional = true 
-
-# openblas based builds can fail in git actions 
-# unless we force ssl to used the vendored feature
-[dependencies.openssl]
-optional = true 
-version = "0.10"
 
 
 # -------------------------------
@@ -175,20 +155,3 @@ crate-type = ["lib","cdylib"]
 rustdoc-args = [ "--html-in-header", "./html/rustdocs-header.html" ]
 
 
-# ------------------------------
-# windows vcpkg config
-# credit: https://github.com/BQSKit/bqskitrs/blob/main/Cargo.toml
-# ------------------------------
-
-[target.'cfg(target_os = "windows")'.build-dependencies]
-vcpkg = "0.2.15"
-
-[package.metadata.vcpkg]
-git = "https://github.com/microsoft/vcpkg"
-rev = "2022.09.27"
-
-[package.metadata.vcpkg.target]
-x86_64-pc-windows-msvc = { triplet="x64-windows-static-md", install=[
-    "openblas",
-    "clapack",
-] }
